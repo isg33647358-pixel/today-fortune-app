@@ -106,7 +106,10 @@
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", function () {
-        navigator.serviceWorker.register("service-worker.js");
+        navigator.serviceWorker.register("service-worker.js").then(function (registration) {
+          // GitHub Pages에 새 파일을 올렸을 때 서비스 워커가 최신 버전을 확인하게 합니다.
+          registration.update();
+        });
       });
     }
   </script>
