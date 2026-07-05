@@ -225,6 +225,80 @@ select:focus {
   box-shadow: 0 0 0 4px rgba(255, 210, 138, 0.18);
 }
 
+/* 양력/음력을 고르는 버튼형 선택 영역입니다. */
+.choice-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* 라디오 버튼을 감싸는 선택 카드입니다. */
+.choice-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin: 0;
+  border: 1px solid rgba(255, 221, 179, 0.34);
+  border-radius: 14px;
+  color: #ffe9ca;
+  background: rgba(255, 248, 237, 0.08);
+  cursor: pointer;
+}
+
+/* 실제 라디오 버튼은 화면에서 작게 숨기고, 카드 전체를 누르게 합니다. */
+.choice-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 선택된 양력/음력 카드를 금색으로 강조합니다. */
+.choice-option:has(input:checked) {
+  border-color: rgba(255, 224, 168, 0.85);
+  color: #2b1638;
+  background: linear-gradient(135deg, #fff0bd 0%, #ffc26f 100%);
+  box-shadow: 0 10px 22px rgba(53, 20, 58, 0.26);
+}
+
+/* 출생시간 입력칸과 모름 체크박스를 한 줄에 배치합니다. */
+.time-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 출생시간 모름 체크박스 영역입니다. */
+.unknown-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  margin: 0;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 221, 179, 0.34);
+  border-radius: 14px;
+  color: #ffe9ca;
+  background: rgba(255, 248, 237, 0.08);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* 체크박스 크기를 손가락으로 누르기 편하게 키웁니다. */
+.unknown-time input {
+  width: 18px;
+  min-height: 18px;
+  accent-color: #ffc26f;
+}
+
+/* 모름을 선택했을 때 시간 입력칸이 비활성화된 느낌을 줍니다. */
+input:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
 /* 운세 보기 버튼입니다. */
 button {
   position: relative;

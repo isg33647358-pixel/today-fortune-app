@@ -1,6 +1,7 @@
 // HTML에서 필요한 요소를 찾아서 변수에 담습니다.
 const birthDateInput = document.querySelector("#birthDate");
 const birthTimeSelect = document.querySelector("#birthTime");
+const unknownTimeInput = document.querySelector("#unknownTime");
 const genderSelect = document.querySelector("#gender");
 const fortuneButton = document.querySelector("#fortuneButton");
 const message = document.querySelector("#message");
@@ -65,12 +66,10 @@ const fortunes = {
   ]
 };
 
-// 출생시간 선택값을 숫자로 바꾸기 위한 표입니다.
-const timeScores = {
-  unknown: 0,
-  morning: 3,
-  afternoon: 6,
-  night: 9
+// 양력/음력 선택값을 숫자로 바꾸기 위한 표입니다.
+const calendarScores = {
+  solar: 0,
+  lunar: 17
 };
 
 // 성별 선택값을 숫자로 바꾸기 위한 표입니다.
@@ -80,10 +79,34 @@ const genderScores = {
   female: 8
 };
 
+// 현재 선택된 양력/음력 값을 가져옵니다.
+function getCalendarType() {
+  const checkedInput = document.querySelector("input[name='calendarType']:checked");
+  return checkedInput.value;
+}
+
+// 출생시간을 숫자로 바꿉니다.
+function getBirthTimeScore(birthTime, isUnknownTime) {
+  // 모름을 선택했다면 시간 점수는 0으로 처리합니다.
+  if (isUnknownTime) {
+    return 0;
+  }
+
+  // "14:30" 같은 시간을 시와 분으로 나눕니다.
+  const timeParts = birthTime.split(":");
+  const hour = Number(timeParts[0]);
+  const minute = Number(timeParts[1]);
+
+  // 시와 분을 함께 반영해서 같은 생년월일이라도 시간에 따라 결과가 달라지게 합니다.
+  return hour * 5 + minute;
+}
+
 // 같은 입력값이면 항상 같은 숫자가 나오도록 기준 숫자를 만듭니다.
-function makeSeed(birthDate, birthTime, gender) {
+function makeSeed(birthDate, calendarType, birthTime, isUnknownTime, gender) {
   const dateNumber = Number(birthDate.replaceAll("-", ""));
-  return dateNumber + timeScores[birthTime] + genderScores[gender];
+  const birthTimeScore = getBirthTimeScore(birthTime, isUnknownTime);
+
+  return dateNumber + calendarScores[calendarType] + birthTimeScore + genderScores[gender];
 }
 
 // 배열 안에서 하나의 문장을 고르는 함수입니다.
@@ -157,10 +180,26 @@ function createMonthlySection(monthlyItems) {
   return section;
 }
 
+// 결과 제목에서 양력/음력을 사람이 읽기 쉬운 글자로 바꿉니다.
+function getCalendarLabel(calendarType) {
+  if (calendarType === "lunar") {
+    return "음력";
+  }
+
+  return "양력";
+}
+
+// 출생시간 모름을 체크하면 시간 입력칸을 잠급니다.
+function updateBirthTimeState() {
+  birthTimeSelect.disabled = unknownTimeInput.checked;
+}
+
 // "올해 운세 보기" 버튼을 눌렀을 때 실행됩니다.
 function showFortune() {
+  const calendarType = getCalendarType();
   const birthDate = birthDateInput.value;
   const birthTime = birthTimeSelect.value;
+  const isUnknownTime = unknownTimeInput.checked;
   const gender = genderSelect.value;
 
   if (!birthDate) {
@@ -171,7 +210,7 @@ function showFortune() {
 
   message.textContent = "";
 
-  const seed = makeSeed(birthDate, birthTime, gender);
+  const seed = makeSeed(birthDate, calendarType, birthTime, isUnknownTime, gender);
   const luckyNumber = (seed % 99) + 1;
 
   const resultItems = [
@@ -186,7 +225,7 @@ function showFortune() {
   ];
 
   fortuneList.innerHTML = "";
-  resultTitle.textContent = `${birthDate}의 해운세`;
+  resultTitle.textContent = `${getCalendarLabel(calendarType)} ${birthDate}의 해운세`;
 
   resultItems.forEach(function (item) {
     const title = item[0];
@@ -202,6 +241,12 @@ function showFortune() {
   resultPanel.classList.remove("hidden");
   resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
+
+// 모름 체크박스가 바뀔 때마다 시간 입력칸 상태를 바꿉니다.
+unknownTimeInput.addEventListener("change", updateBirthTimeState);
+
+// 처음 화면을 열었을 때도 체크 상태에 맞게 시간 입력칸을 정리합니다.
+updateBirthTimeState();
 
 // 버튼을 클릭하면 showFortune 함수가 실행되도록 연결합니다.
 fortuneButton.addEventListener("click", showFortune);

@@ -52,16 +52,29 @@
 
     <!-- 사용자가 운세 정보를 입력하는 영역입니다. -->
     <section class="form-panel" aria-label="운세 입력">
+      <label>생년월일 기준</label>
+      <div class="choice-group" aria-label="양력 또는 음력 선택">
+        <label class="choice-option">
+          <input type="radio" name="calendarType" value="solar" checked>
+          <span>양력</span>
+        </label>
+        <label class="choice-option">
+          <input type="radio" name="calendarType" value="lunar">
+          <span>음력</span>
+        </label>
+      </div>
+
       <label for="birthDate">생년월일</label>
       <input id="birthDate" type="date" max="2026-12-31">
 
       <label for="birthTime">출생시간</label>
-      <select id="birthTime">
-        <option value="unknown">모름</option>
-        <option value="morning">오전</option>
-        <option value="afternoon">오후</option>
-        <option value="night">밤</option>
-      </select>
+      <div class="time-row">
+        <input id="birthTime" type="time" value="12:00">
+        <label class="unknown-time">
+          <input id="unknownTime" type="checkbox">
+          <span>모름</span>
+        </label>
+      </div>
 
       <label for="gender">성별</label>
       <select id="gender">

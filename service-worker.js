@@ -1,5 +1,5 @@
 // 캐시 이름입니다. 파일을 크게 바꿨을 때 숫자를 올리면 새 캐시를 만들 수 있습니다.
-const CACHE_NAME = "today-sea-fortune-v1";
+const CACHE_NAME = "today-sea-fortune-v2";
 
 // 오프라인에서도 열리도록 저장해 둘 파일 목록입니다.
 const FILES_TO_CACHE = [
