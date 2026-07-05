@@ -1,0 +1,419 @@
+/* 모든 요소의 크기 계산을 쉽게 만들기 위한 기본 설정입니다. */
+* {
+  box-sizing: border-box;
+}
+
+/* 페이지 전체의 기본 분위기를 정합니다. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, "Noto Sans KR", sans-serif;
+  color: #fff7ea;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255, 213, 145, 0.26), transparent 24%),
+    radial-gradient(circle at 88% 18%, rgba(181, 119, 255, 0.2), transparent 26%),
+    linear-gradient(160deg, #1b102b 0%, #3b214c 42%, #7b485f 100%);
+}
+
+/* 화면 뒤쪽에 깔리는 은은한 별빛 배경입니다. */
+.background-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255, 236, 196, 0.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(255, 236, 196, 0.45) 0 1px, transparent 1.5px);
+  background-position: 24px 36px, 98px 124px;
+  background-size: 126px 126px, 164px 164px;
+  opacity: 0.36;
+}
+
+/* 모바일 앱처럼 가운데에 좁고 길게 보이도록 합니다. */
+.app {
+  position: relative;
+  width: min(100%, 430px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 18px 42px;
+}
+
+/* 앱 제목 영역입니다. */
+.hero {
+  position: relative;
+  padding: 24px 4px 24px;
+  text-align: center;
+}
+
+/* 달과 별 장식을 담는 영역입니다. */
+.sky-decoration {
+  position: relative;
+  width: 150px;
+  height: 76px;
+  margin: 0 auto 12px;
+}
+
+/* 초승달 모양입니다. */
+.moon {
+  position: absolute;
+  left: 54px;
+  top: 8px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe7aa, #f4a86f);
+  box-shadow: 0 0 24px rgba(255, 213, 145, 0.54);
+}
+
+/* 달 위에 배경색 원을 겹쳐 초승달처럼 보이게 합니다. */
+.moon::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 17px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #251538;
+}
+
+/* 작은 별의 공통 모양입니다. */
+.star,
+.sparkle {
+  position: absolute;
+  display: block;
+  background: #ffe7aa;
+  box-shadow: 0 0 16px rgba(255, 226, 170, 0.7);
+}
+
+/* 동그란 작은 별입니다. */
+.star {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.star-one {
+  left: 18px;
+  top: 18px;
+}
+
+.star-two {
+  right: 24px;
+  top: 22px;
+}
+
+.star-three {
+  left: 38px;
+  bottom: 12px;
+  width: 4px;
+  height: 4px;
+}
+
+/* 십자 반짝임 장식입니다. */
+.sparkle {
+  width: 18px;
+  height: 18px;
+  background: transparent;
+}
+
+.sparkle::before,
+.sparkle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #fff1c8;
+  border-radius: 99px;
+  transform: translate(-50%, -50%);
+}
+
+.sparkle::before {
+  width: 2px;
+  height: 18px;
+}
+
+.sparkle::after {
+  width: 18px;
+  height: 2px;
+}
+
+.sparkle-one {
+  right: 6px;
+  bottom: 18px;
+}
+
+.sparkle-two {
+  left: 4px;
+  bottom: 28px;
+  transform: scale(0.72);
+}
+
+/* 제목 위의 작은 장식 문구입니다. */
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffd79d;
+}
+
+/* 앱 이름입니다. */
+h1 {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.12;
+  font-weight: 800;
+  text-shadow: 0 5px 22px rgba(255, 199, 128, 0.28);
+}
+
+/* 앱 이름 아래의 설명 문구입니다. */
+.intro {
+  margin: 12px 0 0;
+  font-size: 15px;
+  color: #ffe8ca;
+}
+
+/* 입력 영역과 결과 영역에 공통으로 적용되는 패널 디자인입니다. */
+.form-panel,
+.result-panel {
+  border: 1px solid rgba(255, 238, 210, 0.28);
+  border-radius: 22px;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(34, 18, 49, 0.72);
+  box-shadow: 0 24px 70px rgba(16, 8, 28, 0.42);
+  backdrop-filter: blur(16px);
+}
+
+/* 입력 영역의 안쪽 여백입니다. */
+.form-panel {
+  padding: 20px;
+}
+
+/* 입력 칸 위에 붙는 제목입니다. */
+label {
+  display: block;
+  margin: 16px 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffe9ca;
+}
+
+/* 첫 번째 입력 제목은 위 여백을 줄입니다. */
+label:first-of-type {
+  margin-top: 0;
+}
+
+/* 날짜 입력 칸과 선택 상자의 기본 모양입니다. */
+input,
+select {
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid rgba(255, 221, 179, 0.38);
+  border-radius: 14px;
+  padding: 0 14px;
+  font-size: 16px;
+  color: #2b1638;
+  background: #fff8ed;
+  outline: none;
+}
+
+/* 입력 칸을 선택했을 때 테두리를 강조합니다. */
+input:focus,
+select:focus {
+  border-color: #ffd28a;
+  box-shadow: 0 0 0 4px rgba(255, 210, 138, 0.18);
+}
+
+/* 운세 보기 버튼입니다. */
+button {
+  position: relative;
+  width: 100%;
+  min-height: 56px;
+  margin-top: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 244, 214, 0.54);
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 800;
+  color: #30163c;
+  background: linear-gradient(135deg, #fff0bd 0%, #ffc26f 42%, #ee8f91 100%);
+  box-shadow:
+    0 16px 34px rgba(53, 20, 58, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+}
+
+/* 버튼 위를 지나가는 은은한 빛입니다. */
+button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -45%;
+  width: 36%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+  transform: skewX(-18deg);
+}
+
+/* 버튼을 누를 때 살짝 눌리는 느낌을 줍니다. */
+button:active {
+  transform: scale(0.99);
+}
+
+/* 안내 메시지입니다. */
+.message {
+  min-height: 20px;
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: #ffd1c2;
+  text-align: center;
+}
+
+/* 결과 전체 패널입니다. */
+.result-panel {
+  margin-top: 18px;
+  padding: 18px;
+}
+
+/* 결과 상단 제목 영역입니다. */
+.result-header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 238, 210, 0.18);
+}
+
+/* 결과의 연도 표시입니다. */
+.result-year {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: #ffd79d;
+}
+
+/* 결과 제목입니다. */
+h2 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+/* 결과 카드들이 세로로 쌓이는 영역입니다. */
+.fortune-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+/* 전체운, 재물운 같은 기본 운세 카드입니다. */
+.fortune-card {
+  position: relative;
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid rgba(255, 231, 194, 0.28);
+  border-radius: 18px;
+  background:
+    linear-gradient(145deg, rgba(255, 248, 237, 0.18), rgba(255, 248, 237, 0.07)),
+    rgba(255, 248, 237, 0.08);
+  box-shadow:
+    0 14px 30px rgba(14, 7, 25, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* 카드 안쪽에 은은한 빛을 더합니다. */
+.fortune-card::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: rgba(255, 208, 137, 0.17);
+}
+
+/* 운세 카드 제목입니다. */
+.fortune-card h3 {
+  position: relative;
+  margin: 0 0 9px;
+  font-size: 15px;
+  color: #ffe0a8;
+}
+
+/* 운세 카드 내용입니다. */
+.fortune-card p {
+  position: relative;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #fff5e5;
+}
+
+/* 월별 운세 전체를 담는 큰 카드입니다. */
+.monthly-section {
+  padding: 16px;
+  border: 1px solid rgba(255, 231, 194, 0.3);
+  border-radius: 18px;
+  background:
+    linear-gradient(150deg, rgba(255, 222, 163, 0.1), rgba(118, 71, 154, 0.12)),
+    rgba(26, 13, 38, 0.4);
+  box-shadow: 0 16px 34px rgba(14, 7, 25, 0.3);
+}
+
+/* 월별 운세 제목입니다. */
+.monthly-section h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: #ffe0a8;
+}
+
+/* 1월부터 12월까지의 작은 카드들이 들어가는 격자입니다. */
+.monthly-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 10px;
+}
+
+/* 월별 운세의 작은 카드입니다. */
+.month-card {
+  min-height: 126px;
+  padding: 13px 14px;
+  border: 1px solid rgba(255, 231, 194, 0.22);
+  border-radius: 15px;
+  background: rgba(255, 248, 237, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* 월 이름입니다. */
+.month-card h4 {
+  margin: 0 0 7px;
+  font-size: 14px;
+  color: #ffd79d;
+}
+
+/* 월별 운세 문장입니다. */
+.month-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #fff5e5;
+}
+
+/* JavaScript에서 이 클래스를 붙이면 화면에서 숨겨집니다. */
+.hidden {
+  display: none;
+}
+
+/* 화면이 아주 좁을 때 여백과 제목 크기를 줄입니다. */
+@media (max-width: 340px) {
+  .app {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .monthly-grid {
+    grid-template-columns: 1fr;
+  }
+}

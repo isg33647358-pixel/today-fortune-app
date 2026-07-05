@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- 한글이 깨지지 않도록 문자 인코딩을 UTF-8로 설정합니다. -->
+  <meta charset="UTF-8">
+
+  <!-- 모바일 화면 크기에 맞게 페이지 너비를 자동으로 맞춥니다. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 모바일 브라우저 상단 색상을 앱 분위기에 맞는 보라색으로 설정합니다. -->
+  <meta name="theme-color" content="#3b214c">
+
+  <!-- iPhone에서 홈 화면 앱처럼 보이도록 돕는 설정입니다. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="오늘의 해운세">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- 브라우저 탭에 보이는 앱 이름입니다. -->
+  <title>오늘의 해운세</title>
+
+  <!-- PWA 설치 정보를 담은 manifest 파일을 연결합니다. -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- 홈 화면에 추가할 때 사용할 앱 아이콘입니다. -->
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <!-- 디자인을 담당하는 CSS 파일을 연결합니다. -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 배경 위에 은은한 별빛을 더하는 장식 영역입니다. -->
+  <div class="background-glow" aria-hidden="true"></div>
+
+  <!-- 앱 전체를 감싸는 영역입니다. -->
+  <main class="app">
+    <!-- 앱 제목과 별자리 장식이 들어가는 첫 화면 상단입니다. -->
+    <header class="hero">
+      <!-- 화면 분위기를 위한 장식 요소입니다. 실제 기능은 없습니다. -->
+      <div class="sky-decoration" aria-hidden="true">
+        <span class="moon"></span>
+        <span class="star star-one"></span>
+        <span class="star star-two"></span>
+        <span class="star star-three"></span>
+        <span class="sparkle sparkle-one"></span>
+        <span class="sparkle sparkle-two"></span>
+      </div>
+
+      <p class="eyebrow">2026 Year Fortune</p>
+      <h1>오늘의 해운세</h1>
+      <p class="intro">생년월일로 살펴보는 따뜻한 올해의 흐름</p>
+    </header>
+
+    <!-- 사용자가 운세 정보를 입력하는 영역입니다. -->
+    <section class="form-panel" aria-label="운세 입력">
+      <label for="birthDate">생년월일</label>
+      <input id="birthDate" type="date" max="2026-12-31">
+
+      <label for="birthTime">출생시간</label>
+      <select id="birthTime">
+        <option value="unknown">모름</option>
+        <option value="morning">오전</option>
+        <option value="afternoon">오후</option>
+        <option value="night">밤</option>
+      </select>
+
+      <label for="gender">성별</label>
+      <select id="gender">
+        <option value="none">선택 안 함</option>
+        <option value="male">남성</option>
+        <option value="female">여성</option>
+      </select>
+
+      <button id="fortuneButton" type="button">올해 운세 보기</button>
+      <p id="message" class="message" role="alert"></p>
+    </section>
+
+    <!-- 운세 결과가 표시되는 영역입니다. 처음에는 hidden 클래스로 숨겨져 있습니다. -->
+    <section id="result" class="result-panel hidden" aria-live="polite">
+      <div class="result-header">
+        <p class="result-year">2026년 올해 운세</p>
+        <h2 id="resultTitle">당신의 해운세</h2>
+      </div>
+
+      <!-- JavaScript가 이 안에 결과 카드를 하나씩 넣습니다. -->
+      <div id="fortuneList" class="fortune-list"></div>
+    </section>
+  </main>
+
+  <!-- 동작을 담당하는 JavaScript 파일을 연결합니다. -->
+  <script src="script.js"></script>
+
+  <!-- PWA가 오프라인에서도 열릴 수 있도록 서비스 워커를 등록합니다. -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("service-worker.js");
+      });
+    }
+  </script>
+</body>
+</html>
